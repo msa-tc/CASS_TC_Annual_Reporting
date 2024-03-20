@@ -2,6 +2,7 @@
 import csv
 import io
 import subprocess
+import re
 
 # the function is called if a command "INSERT" is found
 def dispatchjob( line ):
@@ -43,6 +44,7 @@ def dispatchjob( line ):
 def proc_geo(geo_1, geo_7, geo_8, geo_9, geo_10):
     # idx: 5 for the first
     idx = 5                     # starting from 6
+    # print(geo_1, geo_7, geo_8, geo_9, geo_10)
     if (row[idx] == '1' or row[idx] == '2' or row[idx] == '3' or row[idx] == '4' or row[idx] == '5' or row[idx] == '6'):
         geo_1 = geo_1 + 1
     elif (row[idx] == '7'):
@@ -61,9 +63,9 @@ def proc_geo(geo_1, geo_7, geo_8, geo_9, geo_10):
 def proc_gender(gender_m, gender_f, gender_u):
     # idx: 6 for the first
     idx = 6                     # starting from 6
-    if (row[idx] == 0):
+    if (row[idx] == 'Male'):
         gender_m = gender_m + 1
-    elif (row[idx] == 1):
+    elif (row[idx] == 'Female'):
         gender_f = gender_f + 1
     else:
         gender_u = gender_u + 1
@@ -72,11 +74,12 @@ def proc_gender(gender_m, gender_f, gender_u):
 def proc_aff(aff_a, aff_i, aff_g):
     # idx: 7 for the first
     idx = 7                     # starting from 6
-    if (row[idx] == 0):
+    if (row[idx] == 'Academia'):
         aff_a = aff_a + 1
-    elif (row[idx] == 1):
+    elif (row[idx] == 'Industry'):
         aff_i = aff_i + 1
     else:
+        print(row[idx])
         aff_g = aff_g + 1
     return (aff_a, aff_i, aff_g)
 
@@ -142,44 +145,46 @@ def proc_other_service( table_other_service ):
 
 def summary_geo(geo_1, geo_7, geo_8, geo_9, geo_10, table_geo):
     total_number = geo_1 + geo_7 + geo_8 + geo_9 + geo_10
+    print(geo_1, geo_7, geo_8, geo_9, geo_10, total_number)
     text_1 = io.StringIO()
-    print(100 * geo_1 / total_number, file=text_1)
-    table_geo = table_geo + 'Regions 1 - 6 (USA) & ' + text_1.getvalue() + '\\\\' + '\hline' + '\n'
+    print("{0:0.1f}".format(100 * geo_1 / total_number), '\%', file=text_1)
+    table_geo = table_geo + 'Regions 1 - 6 (USA) & ' + '\multicolumn{1}{c|}{' + text_1.getvalue().rstrip() + '}' + '\\\\' + '\hline' + '\n'
     text_7 = io.StringIO()
-    print(100 * geo_7 / total_number, file=text_7)
-    table_geo = table_geo + 'Regions 7 (Canada) & ' + text_7.getvalue() + '\\\\' + '\hline' + '\n'
+    print("{0:0.1f}".format(100 * geo_7 / total_number), '\%', file=text_7)
+    table_geo = table_geo + 'Regions 7 (Canada) & ' + '\multicolumn{1}{c|}{' + text_7.getvalue().rstrip() + '}' + '\\\\' + '\hline' + '\n'
     text_8 = io.StringIO()
-    print(100 * geo_8 / total_number, file=text_8)
-    table_geo = table_geo + 'Regions 8 (Europe/Africa, Middle East) & ' + text_7.getvalue() + '\\\\' + '\hline' + '\n'
+    print("{0:0.1f}".format(100 * geo_8 / total_number), '\%', file=text_8)
+    table_geo = table_geo + 'Regions 8 (Europe/Africa, Middle East) & ' + '\multicolumn{1}{c|}{' + text_8.getvalue().rstrip() + '}' + '\\\\' + '\hline' + '\n'
     text_9 = io.StringIO()
-    print(100 * geo_9 / total_number, file=text_9)
-    table_geo = table_geo + 'Regions 9 (Central/South America) & ' + text_9.getvalue() + '\\\\' + '\hline' + '\n'
+    print("{0:0.1f}".format(100 * geo_9 / total_number), '\%', file=text_9)
+    table_geo = table_geo + 'Regions 9 (Central/South America) & ' + '\multicolumn{1}{c|}{' + text_9.getvalue().rstrip() + '}' + '\\\\' + '\hline' + '\n'
     text_10 = io.StringIO()
-    print(100 * geo_10 / total_number, file=text_10)
-    table_geo = table_geo + 'Region 10 (Asia/Pacific) & ' + text_10.getvalue() + '\\\\' + '\hline' + '\n'
+    print("{0:0.1f}".format(100 * geo_10 / total_number), '\%', file=text_10)
+    table_geo = table_geo + 'Region 10 (Asia/Pacific) & ' + '\multicolumn{1}{c|}{' + text_10.getvalue().rstrip() + '}' + '\\\\' + '\hline' + '\n'
     return table_geo
 
 def summary_gender(gender_m, gender_f, gender_u, table_gender):
     total_number = gender_m + gender_f + gender_u
+    print(gender_m, gender_f, gender_u, total_number)
     text_m = io.StringIO()
-    print(100 * gender_m / total_number, file=text_m)
-    table_gender = table_gender + 'Male & ' + text_m.getvalue() + '\\\\' + '\hline' + '\n'
+    print("{0:0.1f}".format(100 * gender_m / total_number), '\%', file=text_m)
+    table_gender = table_gender + 'Male & ' + '\multicolumn{1}{c|}{' + text_m.getvalue().rstrip() + '}' + '\\\\' + '\hline' + '\n'
     text_f = io.StringIO()
-    print(100 * gender_f / total_number, file=text_f)
-    table_gender = table_gender + 'Female & ' + text_f.getvalue() + '\\\\' + '\hline' + '\n'
+    print("{0:0.1f}".format(100 * gender_f / total_number), '\%', file=text_f)
+    table_gender = table_gender + 'Female & ' + '\multicolumn{1}{c|}{' + text_f.getvalue().rstrip() + '}' + '\\\\' + '\hline' + '\n'
     return table_gender
 
 def summary_aff(aff_a, aff_i, aff_g, table_aff):
     total_number = aff_a + aff_i + aff_g
     text_a = io.StringIO()
-    print(100 * aff_a / total_number, file=text_a)
-    table_aff = table_aff + 'Academia & ' + text_a.getvalue() + '\\\\' + '\hline' + '\n'
+    print("{0:0.1f}".format(100 * aff_a / total_number), '\%', file=text_a)
+    table_aff = table_aff + 'Academia & ' + '\multicolumn{1}{c|}{' + text_a.getvalue().rstrip() + '}' + '\\\\' + '\hline' + '\n'
     text_i = io.StringIO()
-    print(100 * aff_i / total_number, file=text_i)
-    table_aff = table_aff + 'Industry & ' + text_i.getvalue() + '\\\\' + '\hline' + '\n'
+    print("{0:0.1f}".format(100 * aff_i / total_number), '\%', file=text_i)
+    table_aff = table_aff + 'Industry & ' + '\multicolumn{1}{c|}{' + text_i.getvalue().rstrip() + '}' + '\\\\' + '\hline' + '\n'
     text_g = io.StringIO()
-    print(100 * aff_g / total_number, file=text_g)
-    table_aff = table_aff + 'Government & ' + text_g.getvalue() + '\\\\' + '\hline' + '\n'
+    print("{0:0.1f}".format(100 * aff_g / total_number), '\%', file=text_g)
+    table_aff = table_aff + 'Government & ' + '\multicolumn{1}{c|}{' + text_g.getvalue().rstrip() + '}' + '\\\\' + '\hline' + '\n'
     return table_aff
 
 # #########################
@@ -212,7 +217,7 @@ table_plan = ''
 # ###################
 # Load data from CSV
 # ###################
-csv_reader = open('../examples/survey.csv', 'r')
+csv_reader = open('../examples/survey_167184_Mar20.csv', 'r')
 has_header = csv.Sniffer().has_header(csv_reader.read(1024))
 csv_reader.seek(0)
 my_db = csv.reader(csv_reader, delimiter=',',skipinitialspace=True)
@@ -222,71 +227,71 @@ if (has_header):
 
 # ##########
 # generate the opening text for each table
-table_voting_members = '''\\begin{table}
-\\centering
-\\begin{tabular}{|c|c|c|c|c|c|}
+table_voting_members = '''\\begin{table}[H]
+\\centering\\small
+\\begin{tabular}{|p{0.08\\textwidth}|p{0.08\\textwidth}|p{0.25\\textwidth}|p{0.25\\textwidth}|p{0.1\\textwidth}|p{0.07\\textwidth}|}
 \\hline
-\\bf{First Name} & \\bf{Last Name} & \\bf{Affiliation} & \\bf{Email} & \\bf{IEEE Grade} & \\bf{IEEE Region}\\\\
-\\hline
-'''
-table_geo = '''\\begin{table}
-\\centering
-\\begin{tabular}{|c|c|}
-\\hline
-\\bf{Region} & \\bf{Percentage of members} \\\\
+\\bf{First Name} & \\bf{Last Name} & \\bf{Affiliation} & \\bf{Email} & \\bf{IEEE Grade} & \\hspace{0pt}\\bf{Region}\\\\
 \\hline
 '''
-table_gender = '''\\begin{table}
-\\centering
-\\begin{tabular}{|c|c|}
+table_geo = '''\\begin{table}[H]
+\\centering\\small
+\\begin{tabular}{|p{0.4\\textwidth}|p{0.23\\textwidth}|}
 \\hline
-\\bf{Gender} & \\bf{Percentage of members} \\\\
-\\hline
-'''
-table_aff = '''\\begin{table}
-\\centering
-\\begin{tabular}{|c|c|}
-\\hline
-\\bf{Category} & \\bf{Percentage of members} \\\\
+\\multicolumn{1}{|c|}{\\bf{Region}} & \\bf{Percentage of members} \\\\
 \\hline
 '''
-table_conference_1 = '''\\begin{table}
-\\centering
-\\begin{tabular}{|c|c|c|c|}
+table_gender = '''\\begin{table}[H]
+\\centering\\small
+\\begin{tabular}{|p{0.2\\textwidth}|p{0.23\\textwidth}|}
+\\hline
+\\multicolumn{1}{|c|}{\\bf{Gender}} & \\bf{Percentage of members} \\\\
+\\hline
+'''
+table_aff = '''\\begin{table}[H]
+\\centering\\small
+\\begin{tabular}{|p{0.2\\textwidth}|p{0.23\\textwidth}|}
+\\hline
+\\multicolumn{1}{|c|}{\\bf{Category}} & \\bf{Percentage of members} \\\\
+\\hline
+'''
+table_conference_1 = '''\\begin{table}[H]
+\\centering\\small
+\\begin{tabular}{|p{0.15\\textwidth}|p{0.19\\textwidth}|p{0.40\\textwidth}|p{0.15\\textwidth}|}
 \\hline
 \\bf{Your Name} & \\bf{Conference/Event Sponsors} & \\bf{Conference/Event Title} & \\bf{Your Role}\\\\
 \\hline
 '''
-table_conference_2 = '''\\begin{table}
-\\centering
-\\begin{tabular}{|c|c|c|c|}
+table_conference_2 = '''\\begin{table}[H]
+\\centering\\small
+\\begin{tabular}{|p{0.15\\textwidth}|p{0.19\\textwidth}|p{0.40\\textwidth}|p{0.15\\textwidth}|}
 \\hline
 \\bf{Your Name} & \\bf{Conference/Event Sponsors} & \\bf{Conference/Event Title} & \\bf{Your Role}\\\\
 \\hline
 '''
-table_journal = '''\\begin{table}
-\\centering
-\\begin{tabular}{|c|c|c|c|}
+table_journal = '''\\begin{table}[H]
+\\centering\\small
+\\begin{tabular}{|p{0.15\\textwidth}|p{0.19\\textwidth}|p{0.40\\textwidth}|p{0.15\\textwidth}|}
 \\hline
 \\bf{Your Name} & \\bf{Journal Sponsors} & \\bf{Journal Title} & \\bf{Your Role}\\\\
 \\hline
 '''
-table_award = '''\\begin{table}
-\\centering
-\\begin{tabular}{|c|c|c|}
+table_award = '''\\begin{table}[H]
+\\centering\\small
+\\begin{tabular}{|p{0.15\\textwidth}|p{0.30\\textwidth}|p{0.15\\textwidth}|}
 \\hline
 \\bf{Your Name} & \\bf{Award / Honor / Recognition} & \\bf{Period}\\\\
 \\hline
 '''
-table_keynote = '''\\begin{table}
-\\centering
-\\begin{tabular}{|c|c|c|c|c|}
+table_keynote = '''\\begin{table}[H]
+\\centering\\small
+\\begin{tabular}{|p{0.1\\textwidth}|p{0.15\\textwidth}|p{0.35\\textwidth}|p{0.15\\textwidth}|p{0.12\\textwidth}|}
 \\hline
 \\bf{Your Name} & \\bf{Invited By} & \\bf{Conference/Event Title} & \\bf{Talk Title} & \\bf{Date}\\\\
 \\hline
 '''
-table_other_service = '''\\begin{table}
-\\centering
+table_other_service = '''\\begin{table}[H]
+\\centering\\small
 \\begin{tabular}{|c|c|c|c|}
 \\hline
 \\bf{Your Name} & \\bf{Organization} & \\bf{Position / Activity} & \\bf{Period}\\\\
@@ -298,7 +303,11 @@ table_other_service = '''\\begin{table}
 for row in my_db:
     for i in range(len(row)):
         row[i] = row[i].replace('&', '\\&')
-    table_voting_members = table_voting_members + row[0] + '&' + row[1] + '&' + row[2] + '&' + row[3] + '&' + row[4] + '&' + row[5] + '\\\\' + '\hline' + '\n'
+
+    # clean the region field, only keep numbers.
+    row[5] = re.sub("[^0-9]", "", row[5])
+
+    table_voting_members = table_voting_members + '\hspace{0pt}' + row[0] + '&' + '\hspace{0pt}' + row[1] + '&' + row[2] + '& \\scriptsize{' + row[3] + '} &' + row[4] + '&' + row[5] + '\\\\' + '\hline' + '\n'
     (geo_1, geo_7, geo_8, geo_9, geo_10) = proc_geo(geo_1, geo_7, geo_8, geo_9, geo_10)
     (gender_m, gender_f, gender_u) = proc_gender(gender_m, gender_f, gender_u)
     (aff_a, aff_i, aff_g) = proc_aff(aff_a, aff_i, aff_g)
@@ -382,7 +391,7 @@ for line in reader:
         line = dispatchjob( line )
         writer.write(line+'\n')
     else:
-        print(line)
+        # print(line)
         writer.write(line+'\n')
     
 reader.close()

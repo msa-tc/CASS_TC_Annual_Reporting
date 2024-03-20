@@ -13,6 +13,7 @@ INSERT_CHAIRELECT_NAME
 
 % \def\name{value}
 
+\usepackage{float}
 \usepackage{graphicx} %LaTeX package to import graphics
 \graphicspath{{images/}} %configuring the graphicx package
 
@@ -99,12 +100,15 @@ June 2023 – May 2024
 \section{Technical Committee/Special Interest Group Meeting(s)}
 \label{sec:tcmeetings}
 
-Instructions: Please provide information on the TC/SiG meetings held in the past year, including date, time, location, attendance rate, and if a quorum was present.
+\input{tcmeetings.tex}
 
 \section{Voting Members}
 \label{sec:votingmembers}
 
 Instructions: A table listing all voting members.
+
+\input{votingmembers.tex}
+
 INSERT_VOTING_MEMBERS
 
 Geographical distribution of TC/SIG members (percentage of total)
@@ -172,10 +176,14 @@ Please list 5 (or less) most significant TC/SIG activities in the past year, for
 \item Awards received by the TC/SIG or the TC/SIG members
 \end{enumerate}
 
+\input{leadership.tex}
+
 INSERT_LEADERSHIP
 
 \section{New plans for the next year}
 Instructions: Are there any new initiatives, workshops, journal special issues, conference special sessions, etc., that your TC or TC members are planning for the next year?
+
+\input{plan.tex}
 
 INSERT_PLAN
 
