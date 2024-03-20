@@ -1,0 +1,197 @@
+\documentclass{article}
+
+% Define margins
+\setlength{\topmargin}{-1.0cm}
+\setlength{\oddsidemargin}{0.1cm}
+\setlength{\textwidth}{16.5cm}
+\setlength{\textheight}{23.0cm}
+
+INSERT_TC_NAME
+INSERT_FULL_TC_NAME
+INSERT_CHAIR_NAME
+INSERT_CHAIRELECT_NAME
+
+% \def\name{value}
+
+\usepackage{graphicx} %LaTeX package to import graphics
+\graphicspath{{images/}} %configuring the graphicx package
+
+% Define header and footer
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{{\includegraphics[height=.65cm]{figs/cass_logo.jpeg}}}
+\rhead{\textbf{\textit{IEEE CASS TC/SIG Annual Report}} }
+\cfoot{\textbf{\textit{\thepage}}}
+% \lfoot{\textbf{\textit{Page \thepage/\pageref*{LastPage}}}}
+% \rfoot{\textbf{\textit{Alejandro Romero Prieto}}}
+% \renewcommand{\footrulewidth}{0.7pt}
+\renewcommand{\headrulewidth}{0.7pt}
+\setlength{\headheight}{23pt}
+
+% This is to define a style with no footer for the table of contents
+\fancypagestyle{nofooter}{%
+  \fancyfoot{}%
+}
+
+% To manage references
+\usepackage{natbib}
+
+\begin{document}
+
+% Title Page %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+
+\begin{center}
+\vspace*{3\baselineskip}
+
+\includegraphics[width=0.2\textwidth]{figs/cass_logo.jpeg}\\
+\vfill
+
+{\huge \textbf{2024 Annual Report}}
+
+\vspace*{3\baselineskip}
+
+{\LARGE \textbf{\TCNAME \ Technical Committee / Special Interest Group}}
+{\LARGE \textbf{IEEE Circuits and Systems Society}}
+
+\begin{large}
+\vspace*{2\baselineskip}
+
+June 2023 – May 2024
+
+\vspace*{2\baselineskip}
+
+\emph{by} \\[1ex]
+%Submitted by \\[\baselineskip]
+{\Large Chairman: \CHAIRNAME \\ \par} % Editor list
+{{ email here}}\\[0.5cm] % Editor affiliation
+{\Large Chair-Elect/Secretary: \CHAIRELECTNAME \\ \par} % Editor list
+{{ email here}}\\[2cm] % Editor affiliation
+
+\vspace*{4\baselineskip}
+
+% 	{\scshape  \today} \\[0.3\baselineskip] % Year published
+{\TCFULLNAME \ TC/SIG}\\
+{\large IEEE Circuits and System Society}\par % Publisher
+
+\thispagestyle{empty} 
+
+\end{large}
+\end{center}
+\pagebreak
+
+
+% Contents %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% \lhead{\emph{Contents}} % Set the left side page header to "Contents"
+% \tableofcontents
+% 	\thispagestyle{nofooter}
+% 	%\include{abstract/abstract}
+% 	\cleardoublepage
+% 	\typeout{}
+
+% \pagebreak
+
+% Student %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\setcounter{page}{1}
+
+\section{Technical Committee/Special Interest Group Meeting(s)}
+\label{sec:tcmeetings}
+
+Instructions: Please provide information on the TC/SiG meetings held in the past year, including date, time, location, attendance rate, and if a quorum was present.
+
+\section{Voting Members}
+\label{sec:votingmembers}
+
+Instructions: A table listing all voting members.
+INSERT_VOTING_MEMBERS
+
+Geographical distribution of TC/SIG members (percentage of total)
+
+INSERT_GEO_DISTRIBUTION
+
+Gender distribution of TC/SIG members (percentage of total)
+
+INSERT_GENDER_DISTRIBUTION
+
+Distribution of TC/SIG members by affiliation (percentage of total)
+
+INSERT_AFF_DISTRIBUTION
+
+\section{Accomplished Technical Activities}
+\label{sec:activities}
+
+\subsection{IEEE Conference/Event organizations}
+Instructions: First priority, please highlight conference/events technically and financially co-sponsored by the CAS Society. A table here.
+
+INSERT_CONFERENCE_1
+
+Instructions: Second priority, please highlight conference/events technically by the CAS Society. A table here
+
+INSERT_CONFERENCE_2
+
+Instructions: Please don’t report conference/events that are NOT sponsored by the CAS Society.  Thank you!
+
+\subsection{IEEE Journal Editorships}
+Instructions: Please highlight the journals that are (co-)sponsored by the CAS Society, cf., https://ieee-cas.org/publications. A table here
+
+INSERT_JOURNAL
+
+Instructions: Please don’t report journals that are NOT sponsored by the CAS Society.  Thank you!
+
+\subsection{Awards, Honors, and Recognition}
+Instructions: Fellow, Distinguished Lecturer, Outstanding Service, Best Paper Awards, and so on by the CAS Society. A table here
+
+INSERT_AWARD
+
+\subsection{Keynote Speeches/Invited Talks}
+Instructions: A table here
+
+INSERT_KEYNOTE
+
+\subsection{Other distinguished IEEE services}
+Instructions: For example, CAS BoG, Region/chapter leadership, TC chair/secretary
+
+INSERT_OTHER_SERVICE
+
+\section{TC Significant Technical Leadership and Innovations}
+Instructions:
+Please list 5 (or less) most significant TC/SIG activities in the past year, for example, but not limited to
+\begin{enumerate}
+\item Established/organized new CASS journals/conferences/workshops
+  \begin{enumerate}
+  \item Please include title, scope, status (e.g., submissions, published papers)
+  \end{enumerate}
+\item Organized special issues in CASS journal, special sessions/tutorials in CASS conferences, CASS seasonal schools, CASS industrial forums, or CASS competitions
+  \begin{enumerate}
+  \item Please include title, the guest editors/organizers, the year, and the month, the number of submissions, the number of papers published, and the impacts (e.g., the total number of citations/full text views so far or the total number of attendees)
+  \end{enumerate}
+\item Organized new CASS initiatives
+\item Established cross-TCs/SIGs collaborations
+\item Awards received by the TC/SIG or the TC/SIG members
+\end{enumerate}
+
+INSERT_LEADERSHIP
+
+\section{New plans for the next year}
+Instructions: Are there any new initiatives, workshops, journal special issues, conference special sessions, etc., that your TC or TC members are planning for the next year?
+
+INSERT_PLAN
+
+%\pagebreak
+
+% BIBLIOGRAPHY %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+
+% Use Leeds Harvard referencing template
+% \bibliographystyle{lsharvard}
+% Add here the bib file with your references
+% \bibliography{references}
+
+% \clearpage
+\end{document}
+
+%%% Local Variables:
+%%% mode: LaTeX
+%%% TeX-master: t
+%%% End:
