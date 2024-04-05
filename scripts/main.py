@@ -62,6 +62,7 @@ def proc_geo(geo_1, geo_7, geo_8, geo_9, geo_10):
     elif (row[idx] == '10'):
         geo_10 = geo_10 + 1
     else:
+        import pdb; pdb.set_trace()
         print("Error in Region number", my_geo)
         sys.exit(1)
     return (geo_1, geo_7, geo_8, geo_9, geo_10)
@@ -223,7 +224,7 @@ table_plan = ''
 # ###################
 # Load data from CSV
 # ###################
-csv_reader = open('../examples/survey_167184_Mar29.csv', 'r')
+csv_reader = open('../examples/survey_167184_Apr05.csv', 'r')
 has_header = csv.Sniffer().has_header(csv_reader.read(1024))
 csv_reader.seek(0)
 my_db = csv.reader(csv_reader, delimiter=',',skipinitialspace=True)
@@ -295,6 +296,9 @@ table_other_service = '''\\begin{table}[H]
 # ##########
 # read data from CSV
 for row in my_db:
+    if (row[5] == ''):
+        continue
+
     for i in range(len(row)):
         row[i] = row[i].replace('&', '\\&')
 
@@ -302,6 +306,7 @@ for row in my_db:
     row[3] = re.sub("_", "\\_", row[3])
     
     table_voting_members = table_voting_members + '\\hspace{0pt}' + row[0] + '&' + '\\hspace{0pt}' + row[1] + '&' + row[2] + '& \\scriptsize{' + row[3] + '} &' + row[4] + '&' + row[5] + '\\\\' + '\\hline' + '\n'
+    
     (geo_1, geo_7, geo_8, geo_9, geo_10) = proc_geo(geo_1, geo_7, geo_8, geo_9, geo_10)
     (gender_m, gender_f, gender_u) = proc_gender(gender_m, gender_f, gender_u)
     (aff_a, aff_i, aff_g) = proc_aff(aff_a, aff_i, aff_g)
